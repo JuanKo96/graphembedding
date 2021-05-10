@@ -1,0 +1,2 @@
+data filter=lfs diff=lfs merge=lfs -text
+data/wiki/20180105/* filter=lfs diff=lfs merge=lfs -text
