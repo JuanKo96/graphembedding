@@ -4,10 +4,10 @@
 
 ### Wiki
 
- - [x] Loading adjacency matrix for 20180105, both NASDAQ and NYSE
- - [] Downloading wikidata -> Generating an adjacency matrix for most recent dump.
+- [ ] Loading adjacency matrix for 20180105, both NASDAQ and NYSE
+- [x] Downloading wikidata -> Generating an adjacency matrix for most recent dump.
 
-The second part's been tough because the dumps are 90GB+ wth 5+ hours to even download and haven't even been able to unzip the thing yet.
+The second part's been tough because the dumps are 90GB+ with 5+ hours to even download and I haven't even been able to unzip the file yet.
 
 #### Code
 Based on: [Temporal Relational Ranking for Stock Prediction](https://arxiv.org/abs/1809.09441)
@@ -44,7 +44,15 @@ South Dakota Investment Council
 ...
 ```
 
-and the adjacency matrix my code returns basically shows pairs of stocks that share the same institutional holder. The value in the corresponding spot in the array is a multiple of that holder's percent share in stock A and the percent share in stock B. Because two companies may share multiple different institutional holders, in these case I just added the multiplied values. Sounds dubious but open to changes and easy to modify.
+and the adjacency matrix my code returns basically shows pairs of stocks that share the same institutional holder. The value in the corresponding spot in the array is a multiple of that holder's percent share in stock A and the percent share in stock B.
+
+For example, say Blackrock holds 6% of Google and 5% of Facebook. Then:
+
+|          | Google    | Facebook  |
+|----------|-----------|-----------|
+| Google   |           | 0.06*0.05 |
+| Facebook | 0.06*0.05 |           |
+
 
 #### Code
 
