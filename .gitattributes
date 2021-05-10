@@ -1,2 +1,13 @@
 data filter=lfs diff=lfs merge=lfs -text
+data/NASDAQ_tickers.csv filter=lfs diff=lfs merge=lfs -text
+data/NYSE_tickers.csv filter=lfs diff=lfs merge=lfs -text
+data/inst_holdings filter=lfs diff=lfs merge=lfs -text
+data/wiki filter=lfs diff=lfs merge=lfs -text
+data/inst_holdings/NYSE_holders_index.txt filter=lfs diff=lfs merge=lfs -text
+data/inst_holdings/NYSE_ticker_to_holders.pkl filter=lfs diff=lfs merge=lfs -text
+data/wiki/20180105 filter=lfs diff=lfs merge=lfs -text
+data/inst_holdings/NASDAQ_holders_index.txt filter=lfs diff=lfs merge=lfs -text
+data/inst_holdings/NASDAQ_ticker_to_holders.pkl filter=lfs diff=lfs merge=lfs -text
+data/wiki/20180105/NASDAQ_wiki_relation.npy filter=lfs diff=lfs merge=lfs -text
+data/wiki/20180105/NYSE_wiki_relation.npy filter=lfs diff=lfs merge=lfs -text
 data/wiki/20180105/* filter=lfs diff=lfs merge=lfs -text
