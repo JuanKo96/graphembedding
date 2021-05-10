@@ -4,8 +4,8 @@
 
 ### Wiki
 
-- [ ] Loading adjacency matrix for 20180105, both NASDAQ and NYSE
-- [x] Downloading wikidata -> Generating an adjacency matrix for most recent dump.
+- [x] Loading adjacency matrix for 20180105, both NASDAQ and NYSE
+- [ ] Downloading wikidata -> Generating an adjacency matrix for most recent dump.
 
 The second part's been tough because the dumps are 90GB+ with 5+ hours to even download and I haven't even been able to unzip the file yet.
 

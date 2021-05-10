@@ -1,0 +1,7 @@
+yfinance==0.1.59
+requests==2.24.0
+numpy==1.19.5
+pandas==1.1.1
+tqdm==4.48.2
+loguru==0.5.3
+beautifulsoup4==4.9.3
