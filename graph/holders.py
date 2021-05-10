@@ -58,8 +58,8 @@ def get_ticker_inst_df(market, ticker_list: List[str]):
     # i.e. we want holders that will make pairs of stocks by sharing the same holder.
     filtered_holders_mst = []
     for mst_holder in holders_mst:
-        if mst_holder[1] == 1:
-            # this holder only holds one stock
+        if mst_holder[1] != 1:
+            # this holder has at least two stocks
             filtered_holders_mst.append(mst_holder[0])
     holders_mst = filtered_holders_mst
 
