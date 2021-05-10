@@ -46,12 +46,12 @@ South Dakota Investment Council
 
 and the adjacency matrix my code returns basically shows pairs of stocks that share the same institutional holder. The value in the corresponding spot in the array is a multiple of that holder's percent share in stock A and the percent share in stock B.
 
-For example, say Blackrock holds 6% of Google and 5% of Facebook. Then:
+For example, say Blackrock holds 6% of Google and 5% of Facebook. Also suppose that Blackrock is the 2nd institutional holder in our list of 619 holders. Then:
 
 |          | Google    | Facebook  |
 |----------|-----------|-----------|
-| Google   |           | 0.06*0.05 |
-| Facebook | 0.06*0.05 |           |
+| Google   |           | [0, 0.06*0.05, 0, 0, ...] |
+| Facebook | [0, 0.06*0.05, 0, 0, ...] |           |
 
 
 #### Code
