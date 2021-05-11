@@ -12,14 +12,14 @@ from bs4 import BeautifulSoup
 from tqdm import tqdm
 from loguru import logger
 
-
-
 WIKI_URL = "https://dumps.wikimedia.org/wikidatawiki/entities/latest-all.json.gz"
 WIKI_PARENT_SITE = "https://dumps.wikimedia.org/wikidatawiki/entities/";
 
 def wiki_latest_date() -> str:
-    '''
-        Example output: "20210507".
+    ''' Extracts latest date available in wikidata database.
+    Parameters:
+    Returns:
+        latest_date (str): "20210507" (example output)
 
         If we are downloading the latest wiki data, find out which date it is up to.
         Example ouput from html:

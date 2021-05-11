@@ -4,6 +4,10 @@
 
 ### Wiki
 
+Refer to the following [brief description](https://www.notion.so/Wiki-Company-Based-Data-4e4e3709afb544ecb5d7aa98d33fc2d7) to get an idea of how this data works. 
+
+TL;DR: "Google" and "Alphabet" are ***"entities"*** (nodes) and "Parent Organization" relation is a ***"property"*** that connects the two (the edge).
+
 - [x] Loading adjacency matrix for 20180105, both NASDAQ and NYSE
 - [ ] Downloading wikidata -> Generating an adjacency matrix for most recent dump.
 
@@ -23,10 +27,12 @@ def load_relation_npy(date: str, market: str)
 
 Example Use:
 ```
-from graph.wiki import load_relation_npy
+from graph.wiki import load_relation_data
 
-relation = load_relation_npy('20180105', 'NYSE')
-print(relation.shape) # (1737, 1737, 33)
+encoding, binary_encoding = load_relation_data('20180105', 'NYSE')
+
+assert encoding.shape == (1737, 1737, 33) # each index of the 3rd dimension represents one type of "property" (explained above )
+assert binary_encoding.shape == (1737, 1737) # 1 if connected, 0 if not
 ```
 
 ### Institutional Holdings
