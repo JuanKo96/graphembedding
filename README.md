@@ -115,4 +115,4 @@ def test_harp():
 
 **Important Details**
  - Must use gensim==3.4.0 and scipy==1.6.3. The original code for HARP was so outdated that it was using Python 2.7. I knew a bleak future was ahead when my first bug fix in running the code were the print statements ('print "..."'). 
- - 
+ - Most of the code under the harp/ directory is code taken from the original codebase and its major dependencies whose code I had to rip apart and fix to work in *reasonable* versions of the packages that are used today (original implementation used versions of scipy and gensim in its beta stages 0.x.x). Going beyond gensim===3.4.0 and scipy==1.6.3 required way too much work, since many of entire classes it was using are not available anymore. 
