@@ -140,6 +140,7 @@ class Word2Vec_hs_loss(Word2Vec):
                     break  # no more jobs => quit this worker
                 sentences, alpha = job
                 tally, raw_tally = self._do_train_job(sentences, alpha, (work, neu1))
+    
                 progress_queue.put((len(sentences), tally, raw_tally))  # report back progress
                 jobs_processed += 1
 #             logger.debug("worker exiting, processed %i jobs", jobs_processed)

@@ -8,12 +8,12 @@ def test_harp():
     encoding, binary_encoding = load_relation_data('20180105', 'NYSE')
 
     options = {
-        "embedding_model": "line",
+        "embedding_model": "deepwalk",
         "sfdp_path": "bin/sfdp_linux",
-        "number_walks": 40,
+        "number_walks": 100,
         "walk_length": 10,
         "representation_size": 128,
-        "window_size": 10
+        "window_size": 8
     }
 
     embedding = harp(binary_encoding, options)

@@ -265,7 +265,8 @@ def skipgram_coarsening_disconnected(graph, recursive_graphs=None, recursive_mer
     lr_scheme = kwargs.get('lr_scheme', 'default')
     alpha = kwargs.get('alpha', 0.025)
     min_alpha = kwargs.get('min_alpha', 0.001)
-    report_loss = kwargs.get('report_loss', False)
+    report_loss = kwargs.get('report_loss', True)
+    report_loss = True
     hs = kwargs.get('hs', 0)
     sample = kwargs.get('sample', 1e-3)
     coarsening_scheme = kwargs.get('coarsening_scheme', 2)
@@ -478,9 +479,9 @@ def skipgram_coarsening_neg(recursive_graphs, recursive_merged_nodes, **kwargs):
 
         # the coarest level
         if level == levels - 1:
-            model = Word2Vec(edges, size=kwargs['representation_size'], window=kwargs['window_size'], min_count=0, sample=sample, sg=1, hs=0, iter=kwargs['iter'][level], workers=20)
+            model = Word2Vec(edges, size=kwargs['representation_size'], window=kwargs['window_size'], min_count=0, sample=sample, sg=1, hs=0, iter=kwargs['iter'][level], workers=20, compute_loss=True)
         else:
-            model = Word2Vec(None, size=kwargs['representation_size'], window=kwargs['window_size'], min_count=0, sample=sample, sg=1, hs=0, iter=kwargs['iter'][level], workers=20)
+            model = Word2Vec(None, size=kwargs['representation_size'], window=kwargs['window_size'], min_count=0, sample=sample, sg=1, hs=0, iter=kwargs['iter'][level], workers=20, compute_loss=True)
             model.build_vocab(edges)
             model.reset_weights()
 
@@ -503,7 +504,8 @@ def skipgram_coarsening_neg(recursive_graphs, recursive_merged_nodes, **kwargs):
             model.syn0_lockf = np.ones(len(model.vocab), dtype=np.float32)
 
             model.train(edges)
-
+            
+            
         models.append(model)
 
     print ('Finish building Skip-gram model on the coarsened graphs.')

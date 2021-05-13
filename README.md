@@ -63,10 +63,32 @@ For example, say Blackrock holds 6% of Google and 5% of Facebook. Also suppose t
 #### Code
 
 ```
-from graph.holders import load_relation_npy
+from graph.holders import load_relation_data
 
-holder_relations = load_relation_npy("NYSE")
-print(holder_relations.shape) # (1738, 1738, 619)
+relation_encoding, full_dim_binary_encoding, binary_encoding = load_relation_data("NYSE", holder_filter=0)
+
+'''
+def load_relation_data(market, holder_filter=0):
+
+Parameters:
+    market (str): NYSE or NASDAQ?
+    holder_filter (int): number of holders required to link two companys as a pair.
+        EXAMPLE: if holder_filter = 2, Company X and Company Y are only paired
+            in the graph if **more than** 2 institutional holders hold both X and Y.
+Returns:
+    relation_encoding (numpy.ndarray) adjacency matrix of size (len(stocks), len(stocks), len(holders))
+        - last dimension stores stock holding percent value (float).
+            EXAMPLE: relation_encoding[X][Y][Z] = (Zth holder's percent share in company X) * (Zth holder's percent share in company Y)
+    full_dim_binary_encoding (numpy.ndarray) shape (len(stocks), len(stocks), len(holders))
+        - last dimension stores whether or not it is held by the holder.
+            EXAMPLE: full_dim_binary_encoding[X][Y][Z] = 1 if Zth holder holds both X and Y. 0 if not.
+    binary_encoding (numpy.ndarray) adjacency matrix of size (len(stocks), len(stocks))
+        - EXAMPLE: binary_encoding[X][Y] = whether any holder holds both X and Y.
+'''
+
+assert relation_encoding.shape == (1737, 1737, 619)
+assert full_dim_binary_encoding.shape == (1737, 1737, 619)
+assert binary_encoding.shape == (1737, 1737)
 ```
 
 #### Details
