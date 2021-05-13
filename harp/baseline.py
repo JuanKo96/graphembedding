@@ -23,7 +23,7 @@ def skipgram_baseline(graph, **kwargs):
         print ('Training the Hierarchical Softmax Model...')
         model = Word2Vec(edges, size=kwargs['representation_size'], window=kwargs['window_size'], min_count=0, sg=1, hs=1, iter=kwargs['iter_count'], workers=20, compute_loss=True)
 
-    print ('Finish training the Skip-gram model.')
+    print ('Finished training the Skip-gram model.')
     loss = model.get_latest_training_loss()
     print("loss", loss)
     return model

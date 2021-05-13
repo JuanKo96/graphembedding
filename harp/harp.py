@@ -44,19 +44,23 @@ def harp(G_input: numpy.ndarray, options=None) -> numpy.ndarray:
     parser = ArgumentParser('harp',
                             formatter_class=ArgumentDefaultsHelpFormatter,
                             conflict_handler='resolve')
-    parser.add_argument('--sfdp-path', default='./bin/sfdp_linux',
+                            
+    parser.add_argument('--sfdp-path', default='./bin/sfdp_osx',
                         help='Path to the SFDP binary file which produces graph coarsening results.')
-    parser.add_argument('--embedding-model', default='deepwalk',
+    parser.add_argument('--model', default='deepwalk',
                         help='Embedding model to use. Could be deepwalk, line or node2vec.')
-
     parser.add_argument('--number-walks', default=40, type=int,
                         help='Number of random walks to start at each node')
+    parser.add_argument('--output', required=False,
+                        help='Output representation file')
     parser.add_argument('--representation-size', default=128, type=int,
                         help='Number of latent dimensions to learn for each node.')
     parser.add_argument('--walk-length', default=10, type=int,
                         help='Length of the random walk started at each node.')
     parser.add_argument('--window-size', default=10, type=int,
                         help='Window size of the Skip-gram model.')
+    parser.add_argument('--workers', default=1, type=int,
+                        help='Number of parallel processes.')
     args = parser.parse_args()
 
     if options:
@@ -78,7 +82,7 @@ def harp(G_input: numpy.ndarray, options=None) -> numpy.ndarray:
             min_alpha=0.001,
             sg=1,
             hs=1,
-            coarsening_scheme=2, 
+            coarsening_scheme=20, 
             sample=0.1
         )
     elif args.embedding_model == 'node2vec':

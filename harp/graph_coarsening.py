@@ -266,7 +266,6 @@ def skipgram_coarsening_disconnected(graph, recursive_graphs=None, recursive_mer
     alpha = kwargs.get('alpha', 0.025)
     min_alpha = kwargs.get('min_alpha', 0.001)
     report_loss = kwargs.get('report_loss', True)
-    report_loss = True
     hs = kwargs.get('hs', 0)
     sample = kwargs.get('sample', 1e-3)
     coarsening_scheme = kwargs.get('coarsening_scheme', 2)
@@ -278,6 +277,7 @@ def skipgram_coarsening_disconnected(graph, recursive_graphs=None, recursive_mer
         print ('Subgraph %d with %d nodes and %d edges' % (count, subgraph.number_of_nodes(), subgraph.number_of_edges()))
 
         if not subgraph.is_connected():
+            print("Not connected. Running baseline.skipgram_baseline\n")
             gc_single_model = baseline.skipgram_baseline(subgraph,
                                         scale=scale,
                                         num_paths=num_paths,
@@ -502,9 +502,7 @@ def skipgram_coarsening_neg(recursive_graphs, recursive_merged_nodes, **kwargs):
                         model.syn0[word_ind] = prev_syn0[merged_word]
                         model.syn1neg[word_ind] = prev_syn1neg[merged_word]
             model.syn0_lockf = np.ones(len(model.vocab), dtype=np.float32)
-
             model.train(edges)
-            
             
         models.append(model)
 
