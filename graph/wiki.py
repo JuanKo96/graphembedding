@@ -12,13 +12,15 @@ from bs4 import BeautifulSoup
 from tqdm import tqdm
 from loguru import logger
 
-
-
 WIKI_URL = "https://dumps.wikimedia.org/wikidatawiki/entities/latest-all.json.gz"
 WIKI_PARENT_SITE = "https://dumps.wikimedia.org/wikidatawiki/entities/";
 
 def wiki_latest_date() -> str:
-    '''
+    ''' Extracts latest date available in wikidata database.
+    Parameters:
+    Returns:
+        latest_date (str): "20210507" (example output)
+
         If we are downloading the latest wiki data, find out which date it is up to.
         Example ouput from html:
             ...
@@ -28,7 +30,7 @@ def wiki_latest_date() -> str:
             <a href="dcatap.rdf">dcatap.rdf</a>
             ...
         
-        Want to extract "20210507"
+        Want to extract "20210507" here.
     '''
     
     html = requests.get(WIKI_PARENT_SITE).text
@@ -124,4 +126,16 @@ def load_relation_npy(date, market):
             wiki_relation_np = np.load(market_npy_url)
             return wiki_relation_np
     logger.error(f"Could not find desired pre-saved wikidata relation file for date: {date}, market: {market}.\nConsider downloading the most recent version.")
+    return None
+
+def load_relation_data(date, market):
+    if os.path.isdir(f"data/wiki/{date}"):
+        market_npy_url = f"data/wiki/{date}/{market.upper()}_wiki_relation.npy"
+            
+        relation_encoding = np.load(market_npy_url)
+        rel_shape = [relation_encoding.shape[0], relation_encoding.shape[1]]
+        mask_flags = np.equal(np.zeros(rel_shape, dtype=int),
+                            np.sum(relation_encoding, axis=2))
+        mask = np.where(mask_flags, np.zeros(rel_shape, dtype=int), np.ones(rel_shape, dtype=int))
+        return relation_encoding, mask
     return None

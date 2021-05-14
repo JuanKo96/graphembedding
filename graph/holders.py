@@ -144,6 +144,12 @@ def generate_relation_matrix(market):
 
 def load_relation_npy(market):
     '''
+        Parameters:
+            market (str): NYSE or NASDAQ?
+        Returns:
+            numpy.ndarray object of size (len(stocks), len(stocks), len(holders))
+                the last dimension is an array where each index corresponds to one holder
+
         If .npy file found in data/inst_holdings/{market}_inst_relation.npy
         then simply load.
 
@@ -160,3 +166,42 @@ def load_relation_npy(market):
         relation = generate_relation_matrix(market)
         return relation
 
+
+def load_relation_data(market, holder_filter=0):
+    '''
+        Parameters:
+            market (str): NYSE or NASDAQ?
+            holder_filter (int): number of holders required to link two companys as a pair.
+                EXAMPLE: if holder_filter = 2, Company X and Company Y are only paired
+                    in the graph if **more than** 2 institutional holders hold both X and Y.
+        Returns:
+            relation_encoding (numpy.ndarray) adjacency matrix of size (len(stocks), len(stocks), len(holders))
+                - last dimension stores stock holding percent value (float).
+                    EXAMPLE: relation_encoding[X][Y][Z] = (Zth holder's percent share in company X) * (Zth holder's percent share in company Y)
+            full_dim_binary_encoding (numpy.ndarray) shape (len(stocks), len(stocks), len(holders))
+                - last dimension stores whether or not it is held by the holder.
+                    EXAMPLE: full_dim_binary_encoding[X][Y][Z] = 1 if Zth holder holds both X and Y. 0 if not.
+            binary_encoding (numpy.ndarray) adjacency matrix of size (len(stocks), len(stocks))
+                - EXAMPLE: binary_encoding[X][Y] = whether any holder holds both X and Y.
+    '''
+    relation_encoding = load_relation_npy(market)
+
+    rel_shape = [relation_encoding.shape[0], relation_encoding.shape[1]]
+
+    full_dimension_binary_mask = np.equal(
+        np.zeros(relation_encoding.shape),
+        relation_encoding
+    )
+    full_dim_binary_encoding = np.where(
+        full_dimension_binary_mask,
+        np.zeros(full_dimension_binary_mask.shape, dtype=int),
+        np.ones(full_dimension_binary_mask.shape, dtype=int)
+    )
+
+    mask_flags = np.less_equal(
+        np.sum(full_dim_binary_encoding, axis=2), 
+        np.ones(rel_shape, dtype=int)*holder_filter
+    )
+    binary_encoding = np.where(mask_flags, np.zeros(rel_shape, dtype=int), np.ones(rel_shape, dtype=int))
+    return relation_encoding, full_dim_binary_encoding, binary_encoding
+    
