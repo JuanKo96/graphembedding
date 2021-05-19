@@ -62,6 +62,28 @@ class RelationalEmbedding(nn.Module):
 
         Felt reluctant about single-letter variable names but code became much more readable like this,
         especially when these are widely-agreed upon names.
+
+        The following is a walkthrough of one of the more confusing part of the code:
+
+        Suppose seq_embed = [1,2,3] 
+
+        seq_repeated = 
+        | 1 1 1 |
+        | 2 2 2 |
+        | 3 3 3 |
+
+        seq_repeated.transpose(0,1)=
+        | 1 2 3 |
+        | 1 2 3 |
+        | 1 2 3 |
+
+        seq_combined=
+        | [1,1] [1,2] [1,3] |
+        | [2,1] [2,2] [2,3] |
+        | [3,1] [3,2] [3,3] |
+
+        hence, seq_combined[i][j] = [e_i, e_j]
+        where e_k = sequential embedding of kth stock.
         """
 
         N = seq_embed.size(0)           # number of stocks
