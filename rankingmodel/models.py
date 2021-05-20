@@ -237,7 +237,7 @@ def test_sage():
     )
 
     predictions = model(input_data)
-    assert predictions.size() == [N, 1]
+    assert predictions.size() == (N, 1)
     print(model)
 
 if __name__ == "__main__":
