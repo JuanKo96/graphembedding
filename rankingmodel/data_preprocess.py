@@ -77,8 +77,8 @@ class DataPreprocess():
             X.append(window_X_data)
             y.append(window_y_data)
 
-        X = np.stack(X, 0)
-        y = np.stack(y, 0)
+        X = np.stack(X, 0).T # shape = (N, window, input_size)
+        y = np.stack(y, 0).T # shape = (N, input_size)
         
         return X, y
     
