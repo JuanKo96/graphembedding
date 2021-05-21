@@ -4,25 +4,20 @@ import torch.nn.functional as F
 from loguru import logger
 
 class SequentialEmbedding(nn.Module):
-    '''Nothing much than a placeholder class for now.
-    '''
+    
     def __init__(self, input_size, output_size, device):
         super(SequentialEmbedding, self).__init__()
         self.input_size = input_size
         self.output_size = output_size
         self.device = device
 
-        # mock model architecture:
-        self.linear = torch.nn.Linear(input_size, output_size).to(device)
-        self.activation_function = nn.LeakyReLU().to(device)
+        self.lstm = torch.nn.LSTM(input_size, output_size, num_layers=2).to(device)
 
     def forward(self, input_data):
-        '''
-        Replace this stupid linear layer with LSTMs
-        '''
-        out = self.linear(input_data)
-        out = self.activation_function(out)
-        return out
+        
+        out, _ = self.lstm(input_data)
+        
+        return out[:,-1,:] # Shape of (N x U)
     
 class RelationalEmbedding(nn.Module):
     def __init__(self, seq_embed_size, rel_encoding, rel_mask, k_hops, hop_layers, device):
@@ -215,9 +210,10 @@ def test_sage():
     K = 2 # number of possible relations in graph
     seq_embed_size = 64
     input_size = 100 # completely arbitrary 
+    window_size = 30 # random
     device = "cuda:0"
 
-    input_data = torch.rand(N, input_size).to(device)
+    input_data = torch.rand(N, window_size,input_size).to(device)
 
     rel_encoding = torch.randint(0,2, (N, N, K))
     for i in range(rel_encoding.size(0)):
@@ -237,15 +233,8 @@ def test_sage():
     )
 
     predictions = model(input_data)
-    assert predictions.size() == [N, 1]
+    assert predictions.size() == (N, 1)
     print(model)
 
 if __name__ == "__main__":
     test_sage()
-
-
-        
-
-        
-                
-
