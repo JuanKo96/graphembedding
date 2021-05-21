@@ -7,6 +7,7 @@ from pathlib import Path
 import requests
 
 import numpy as np
+import pandas as pd
 
 from bs4 import BeautifulSoup
 from tqdm import tqdm
@@ -15,8 +16,9 @@ from loguru import logger
 WIKI_URL = "https://dumps.wikimedia.org/wikidatawiki/entities/latest-all.json.gz"
 WIKI_PARENT_SITE = "https://dumps.wikimedia.org/wikidatawiki/entities/";
 
-def wiki_latest_date() -> str:
-    ''' Extracts latest date available in wikidata database.
+def wiki_latest_date():
+    
+    '''Extracts latest date available in wikidata database.
     Parameters:
     Returns:
         latest_date (str): "20210507" (example output)
@@ -32,7 +34,6 @@ def wiki_latest_date() -> str:
         
         Want to extract "20210507" here.
     '''
-    
     html = requests.get(WIKI_PARENT_SITE).text
     soup = BeautifulSoup(html)
     links = list(soup.find_all("a"))
@@ -139,3 +140,40 @@ def load_relation_data(date, market):
         mask = np.where(mask_flags, np.zeros(rel_shape, dtype=int), np.ones(rel_shape, dtype=int))
         return relation_encoding, mask
     return None
+
+def get_encodings(date, market, model_tickers):
+    
+    # Get encoding and binary_encoding
+    encoding, binary_encoding = load_relation_data(date, market)
+
+    tickers_csv_url = f"data/{market.upper()}_tickers.csv"
+    
+    # Get tickers from csv as a list
+    universe_tickers = pd.read_csv(tickers_csv_url, header=None)
+    universe_tickers = universe_tickers.iloc[:,0].tolist()
+
+    ticker_test = [i for i in model_tickers if i not in universe_tickers]
+
+    # Check whether every ticker is in the market
+    assert len(ticker_test) == 0, f"{ticker_test} not in {market}"
+
+    # Make an index list for given tickers
+    idx_list = []
+
+    for ticker in model_tickers:
+        idx_list.append(universe_tickers.index(ticker))
+        
+    # Make a new relation encoding with the given tickers only
+    for i in range(encoding.shape[2]):
+        temp_rel_encoding = encoding[:,:,i]
+        
+        temp_rel_encoding = temp_rel_encoding[np.ix_(idx_list,idx_list)]
+        
+        if i == 0:
+            new_rel_encoding = temp_rel_encoding
+        else:
+            new_rel_encoding = np.dstack([new_rel_encoding, temp_rel_encoding])     
+            
+    new_binary_encoding = binary_encoding[np.ix_(idx_list,idx_list)]
+    
+    return new_rel_encoding, new_binary_encoding
