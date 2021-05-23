@@ -21,6 +21,7 @@ def main():
     parser.add_argument('--fn_layers', default=3)
     parser.add_argument('--lr', default=1e-4)
     parser.add_argument('--weight_decay', default=1e-8)
+    parser.add_argument('--alpha', default=0.6)
 
     parser.add_argument('--epochs', default=50)
     parser.add_argument('--batch_size', default=2)

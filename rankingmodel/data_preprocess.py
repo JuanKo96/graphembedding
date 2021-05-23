@@ -52,9 +52,8 @@ class DataPreprocess():
 
         # assert matrix.shape == (1259, 481) # [# of days, # of stocks] = [T, N]  
         
-
-
-        self.y_data = stock_data.pct_change().rank(axis=1)
+        # self.y_data = stock_data.pct_change().rank(axis=1)
+        self.y_data = stock_data.pct_change()
         
     def _normalize_data(self, stock_data):
         """Normalize data
