@@ -58,7 +58,7 @@ def train(model, train_loader, val_loader, args):
 
         train_loss.append(np.mean(epoch_loss))
         epoch_loss = []      
-        torch.cuda.empty_cache() # 캐시 비워주기 자주 해줘야함
+        # torch.cuda.empty_cache() # 캐시 비워주기 자주 해줘야함
         
         # Validation
         model.eval()
@@ -73,7 +73,7 @@ def train(model, train_loader, val_loader, args):
                 epoch_val_loss.append(loss.item())
             val_loss.append(np.mean(epoch_val_loss))
 
-        if epoch % 100 == 0: 
+        if epoch % 10 == 0: 
             logger.info('Epoch: {}, Train Loss: {:.4e}, Valid Loss: {:.4e}'.format(epoch, train_loss[-1], val_loss[-1]))
 
         # Update minimum loss
@@ -88,5 +88,5 @@ def train(model, train_loader, val_loader, args):
         if patience > 10:
             break
             
-        torch.cuda.empty_cache() ## 캐시 비워주기 자주 해줘야함
+        # torch.cuda.empty_cache() ## 캐시 비워주기 자주 해줘야함
     return train_loss, val_loss

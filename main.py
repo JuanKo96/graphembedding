@@ -24,8 +24,8 @@ def main():
     parser.add_argument('--weight_decay', default=1e-8)
     parser.add_argument('--alpha', default=0.6)
 
-    parser.add_argument('--epochs', default=50)
-    parser.add_argument('--batch_size', default=2)
+    parser.add_argument('--epochs', default=5)
+    parser.add_argument('--batch_size', default=4)
     parser.add_argument('--window_size', default=30)
     parser.add_argument('--device', default='cpu')
 
@@ -42,7 +42,7 @@ def main():
     
 
     if torch.cuda.is_available():
-        args.device = "cuda:0"
+        args.device = "cuda:1"
 
     # Load Data
     logger.info("Loading data...")
@@ -88,9 +88,11 @@ def main():
         "test_loss": test_loss,
         "args": args
     }
-    f = open(args.session_data_path, "rb")
-    pickle.dump(session_info, f)
-    f.close()
+    # f = open(args.session_data_path, "rb")
+    # pickle.dump(session_info, f)
+    # f.close()
+    with open(args.session_data_path, 'wb') as f:
+        pickle.dump(session_info, f)
 
 if __name__ == "__main__":
     main()
