@@ -4,6 +4,7 @@ import torch
 import pickle
 from loguru import logger
 
+from test import test
 from train import train
 from dataloader import get_dataloader
 from graph.wiki import get_encodings
