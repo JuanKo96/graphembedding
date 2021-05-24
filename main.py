@@ -29,6 +29,17 @@ def main():
     parser.add_argument('--device', default='cpu')
 
     args = parser.parse_args()
+
+    # maintaining the path stuff here allows the log output to have this information as well
+    # which helps later on when looking at a log and feeling like retrieving the correspoinding model
+    args.model_id = f'LSTM_{args.seq_embed_size}_seq_{args.window_size}_window'
+    args.path = f'checkpoints/{args.model_id}.pt'
+    args.logger_path = f'logs/{args.model_id}.log'
+    args.session_data_path = f'sessiondata/{args.model_id}.pkl'
+    logger.add(args.logger_path)
+    
+    
+
     if torch.cuda.is_available():
         args.device = "cuda:0"
 
@@ -49,7 +60,6 @@ def main():
     
     encoding, _ = get_encodings('20180105', 'NASDAQ', model_tickers)
     relational_encoding = torch.FloatTensor(encoding).to(args.device)
-    print("relational_encoding", relational_encoding.size())
 
     # Initialize Model
     model = TemporalSAGE(
@@ -68,7 +78,18 @@ def main():
     for arg in vars(args):
         logger.info(f"{arg}: {getattr(args, arg)}")
 
-    train(model=model, train_loader=train_loader, val_loader=val_loader, args=args)
+    train_loss, val_loss = train(model=model, train_loader=train_loader, val_loader=val_loader, args=args)
+    test_loss = test(model=model, test_loader=test_loader, args=args)
+
+    session_info = {
+        "train_loss": train_loss,
+        "val_loss": val_loss,
+        "test_loss": test_loss,
+        "args": args
+    }
+    f = open(args.session_data_path, "rb")
+    pickle.dump(session_info, f)
+    f.close()
 
 if __name__ == "__main__":
     main()

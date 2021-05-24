@@ -1,0 +1,45 @@
+2021-05-24 08:09:41.602 | INFO     | __main__:main:46 - Loading data...
+2021-05-24 08:09:47.870 | INFO     | __main__:main:74 - 
+TemporalSAGE(
+  (sequential_embedding_model): SequentialEmbedding(
+    (lstm): LSTM(1, 64, num_layers=3, batch_first=True)
+  )
+  (relational_embedding_model): RelationalEmbedding(
+    (softmax_dim_1): Softmax(dim=1)
+    (activation_function): LeakyReLU(negative_slope=0.01)
+    (linear_1_hop_layer_1): Linear(in_features=171, out_features=171, bias=True)
+    (linear_1_hop_layer_2): Linear(in_features=171, out_features=171, bias=True)
+    (linear_1_hop_layer_3): Linear(in_features=171, out_features=1, bias=True)
+    (linear_2_hop_layer_1): Linear(in_features=171, out_features=171, bias=True)
+    (linear_2_hop_layer_2): Linear(in_features=171, out_features=171, bias=True)
+    (linear_2_hop_layer_3): Linear(in_features=171, out_features=1, bias=True)
+    (linear_3_hop_layer_1): Linear(in_features=171, out_features=171, bias=True)
+    (linear_3_hop_layer_2): Linear(in_features=171, out_features=171, bias=True)
+    (linear_3_hop_layer_3): Linear(in_features=171, out_features=1, bias=True)
+  )
+  (combined_prediction_model): FullyConnected(
+    (activation_function): LeakyReLU(negative_slope=0.01)
+    (linear_layer_1): Linear(in_features=128, out_features=128, bias=True)
+    (linear_layer_2): Linear(in_features=128, out_features=128, bias=True)
+    (linear_layer_3): Linear(in_features=128, out_features=1, bias=True)
+  )
+)
+2021-05-24 08:09:47.871 | INFO     | __main__:main:76 - Starting training with args:
+2021-05-24 08:09:47.871 | INFO     | __main__:main:78 - seq_embed_size: 64
+2021-05-24 08:09:47.871 | INFO     | __main__:main:78 - k_hops: 3
+2021-05-24 08:09:47.871 | INFO     | __main__:main:78 - hop_layers: 3
+2021-05-24 08:09:47.872 | INFO     | __main__:main:78 - lstm_layers: 3
+2021-05-24 08:09:47.872 | INFO     | __main__:main:78 - fn_layers: 3
+2021-05-24 08:09:47.872 | INFO     | __main__:main:78 - lr: 0.0001
+2021-05-24 08:09:47.872 | INFO     | __main__:main:78 - weight_decay: 1e-08
+2021-05-24 08:09:47.873 | INFO     | __main__:main:78 - alpha: 0.6
+2021-05-24 08:09:47.873 | INFO     | __main__:main:78 - epochs: 50
+2021-05-24 08:09:47.873 | INFO     | __main__:main:78 - batch_size: 2
+2021-05-24 08:09:47.873 | INFO     | __main__:main:78 - window_size: 30
+2021-05-24 08:09:47.873 | INFO     | __main__:main:78 - device: cuda:0
+2021-05-24 08:09:47.873 | INFO     | __main__:main:78 - path: checkpoints/LSTM_64_seq_30_window
+2021-05-24 08:09:47.874 | INFO     | __main__:main:78 - logger_path: logs/LSTM_64_seq_embed_size_30_window.log
+2021-05-24 08:09:47.874 | INFO     | __main__:main:78 - session_data_path: logs/LSTM_64_seq_embed_size_30_window.pkl
+2021-05-24 08:09:47.874 | INFO     | train:train:39 - Starting Epoch 0...
+2021-05-24 08:11:22.121 | INFO     | train:train:77 - Epoch: 0, Train Loss: 2.5389e-04, Valid Loss: 2.8931e-04
+2021-05-24 08:11:22.152 | INFO     | train:train:39 - Starting Epoch 1...

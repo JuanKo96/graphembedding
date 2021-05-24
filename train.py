@@ -26,7 +26,7 @@ def ranking_mse_loss(mse_criterion, pred_rr, true_rr, alpha):
     return loss
     
 def train(model, train_loader, val_loader, args):
-    path = f'checkpoints/LSTM_{args.seq_embed_size}_seq_embed_size_{args.window_size}_window'
+    path = args.path
     # Loss function & optimizer. Should this be written in main.py or train.py? 
     criterion = nn.MSELoss()
     optimizer = optim.Adam(model.parameters(), lr=args.lr, weight_decay=args.weight_decay)
@@ -49,7 +49,6 @@ def train(model, train_loader, val_loader, args):
             
             # Now calculate ranking loss
             loss = ranking_mse_loss(criterion, pred_return_ratio, y_train, args.alpha)
-            print(loss.item())
             epoch_loss.append(loss.item())
 
             model.zero_grad()
@@ -68,10 +67,11 @@ def train(model, train_loader, val_loader, args):
             for batch_idx, (x_val, y_val) in enumerate(val_loader):
                 out = model(x_val)
 
-                loss = ranking_mse_loss(criterion, pred_return_ratio, y_train, args.alpha)
+                pred_return_ratio = out 
+                loss = ranking_mse_loss(criterion, pred_return_ratio, y_val, args.alpha)
 
                 epoch_val_loss.append(loss.item())
-                val_loss.append(np.mean(epoch_val_loss))
+            val_loss.append(np.mean(epoch_val_loss))
 
         if epoch % 100 == 0: 
             logger.info('Epoch: {}, Train Loss: {:.4e}, Valid Loss: {:.4e}'.format(epoch, train_loss[-1], val_loss[-1]))
@@ -89,4 +89,4 @@ def train(model, train_loader, val_loader, args):
             break
             
         torch.cuda.empty_cache() ## 캐시 비워주기 자주 해줘야함
-        
+    return train_loss, val_loss
