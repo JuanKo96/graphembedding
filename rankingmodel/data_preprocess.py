@@ -45,7 +45,15 @@ class DataPreprocess():
         Args:
             stock_data (pd.DataFrame): Stock data with date in its index and tickers in its columns
         """
-        self.y_data = stock_data.pct_change().rank(axis=1)
+        tickers = stock_data.columns
+        price_matrix = stock_data.to_numpy()
+        pct_change_matrix = stock_data.pct_change().to_numpy()
+        
+
+        # assert matrix.shape == (1259, 481) # [# of days, # of stocks] = [T, N]  
+        
+        # self.y_data = stock_data.pct_change().rank(axis=1)
+        self.y_data = stock_data.pct_change()
         
     def _normalize_data(self, stock_data):
         """Normalize data
@@ -80,6 +88,10 @@ class DataPreprocess():
         X = np.stack(X, 0).T # shape = (N, window, input_size)
         y = np.stack(y, 0).T # shape = (N, input_size)
         
+        X = np.transpose(X, (2,1,0)) # shape = (# of datapoints, window, N)
+        X = np.expand_dims(X, axis=-1) # (#data, window, N, n_features)
+        y = np.transpose(y, (1,0)) # shape = (# of datapoints, true order of stocks)
+        
         return X, y
     
     def _train_val_test_split(self, X, y, split_ratio):
@@ -95,15 +107,17 @@ class DataPreprocess():
         train_pct, val_pct, test_pct = split_ratio
         
         # Generate two indices for split
-        idx_1 = int(X.shape[-1]*train_pct)
-        idx_2 = int(X.shape[-1]*(train_pct+val_pct))
+        idx_1 = int(X.shape[0]*train_pct)
+        idx_2 = int(X.shape[0]*(train_pct+val_pct))
         
+
+
         # Indexing for both X and y
-        self.X_train = X[:,:,:idx_1]
-        self.X_val = X[:,:,idx_1:idx_2]
-        self.X_test = X[:,:,idx_2:]
+        self.X_train = X[:idx_1,:,:]
+        self.X_val = X[idx_1:idx_2,:,:]
+        self.X_test = X[idx_2:,:,:]
         
-        self.y_train = y[:,:idx_1]
-        self.y_val = y[:,idx_1:idx_2]
-        self.y_test = y[:,idx_2:]
+        self.y_train = y[:idx_1,:]
+        self.y_val = y[idx_1:idx_2,:]
+        self.y_test = y[idx_2:,:]
         

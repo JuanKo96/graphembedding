@@ -1,0 +1,123 @@
+2021-05-24 08:53:22.389 | INFO     | __main__:main:48 - Loading data...
+2021-05-24 08:53:36.271 | INFO     | __main__:main:76 - 
+TemporalSAGE(
+  (sequential_embedding_model): SequentialEmbedding(
+    (lstm): LSTM(1, 64, num_layers=3, batch_first=True)
+  )
+  (relational_embedding_model): RelationalEmbedding(
+    (softmax_dim_1): Softmax(dim=1)
+    (activation_function): LeakyReLU(negative_slope=0.01)
+    (linear_1_hop_layer_1): Linear(in_features=171, out_features=171, bias=True)
+    (linear_1_hop_layer_2): Linear(in_features=171, out_features=171, bias=True)
+    (linear_1_hop_layer_3): Linear(in_features=171, out_features=1, bias=True)
+    (linear_2_hop_layer_1): Linear(in_features=171, out_features=171, bias=True)
+    (linear_2_hop_layer_2): Linear(in_features=171, out_features=171, bias=True)
+    (linear_2_hop_layer_3): Linear(in_features=171, out_features=1, bias=True)
+    (linear_3_hop_layer_1): Linear(in_features=171, out_features=171, bias=True)
+    (linear_3_hop_layer_2): Linear(in_features=171, out_features=171, bias=True)
+    (linear_3_hop_layer_3): Linear(in_features=171, out_features=1, bias=True)
+  )
+  (combined_prediction_model): FullyConnected(
+    (activation_function): LeakyReLU(negative_slope=0.01)
+    (linear_layer_1): Linear(in_features=128, out_features=128, bias=True)
+    (linear_layer_2): Linear(in_features=128, out_features=128, bias=True)
+    (linear_layer_3): Linear(in_features=128, out_features=1, bias=True)
+  )
+)
+2021-05-24 08:53:36.272 | INFO     | __main__:main:78 - Starting training with args:
+2021-05-24 08:53:36.272 | INFO     | __main__:main:80 - seq_embed_size: 64
+2021-05-24 08:53:36.272 | INFO     | __main__:main:80 - k_hops: 3
+2021-05-24 08:53:36.272 | INFO     | __main__:main:80 - hop_layers: 3
+2021-05-24 08:53:36.273 | INFO     | __main__:main:80 - lstm_layers: 3
+2021-05-24 08:53:36.273 | INFO     | __main__:main:80 - fn_layers: 3
+2021-05-24 08:53:36.273 | INFO     | __main__:main:80 - lr: 0.0001
+2021-05-24 08:53:36.273 | INFO     | __main__:main:80 - weight_decay: 1e-08
+2021-05-24 08:53:36.273 | INFO     | __main__:main:80 - alpha: 0.6
+2021-05-24 08:53:36.273 | INFO     | __main__:main:80 - epochs: 50
+2021-05-24 08:53:36.273 | INFO     | __main__:main:80 - batch_size: 2
+2021-05-24 08:53:36.274 | INFO     | __main__:main:80 - window_size: 30
+2021-05-24 08:53:36.274 | INFO     | __main__:main:80 - device: cuda:1
+2021-05-24 08:53:36.274 | INFO     | __main__:main:80 - model_id: LSTM_64_seq_30_window
+2021-05-24 08:53:36.274 | INFO     | __main__:main:80 - path: checkpoints/LSTM_64_seq_30_window.pt
+2021-05-24 08:53:36.274 | INFO     | __main__:main:80 - logger_path: logs/LSTM_64_seq_30_window.log
+2021-05-24 08:53:36.274 | INFO     | __main__:main:80 - session_data_path: sessiondata/LSTM_64_seq_30_window.pkl
+2021-05-24 08:53:36.275 | INFO     | train:train:39 - Starting Epoch 0...
+2021-05-24 08:54:32.986 | INFO     | train:train:77 - Epoch: 0, Train Loss: 2.5068e-04, Valid Loss: 2.8952e-04
+2021-05-24 08:54:55.180 | INFO     | __main__:main:48 - Loading data...
+2021-05-24 08:55:09.300 | INFO     | __main__:main:76 - 
+TemporalSAGE(
+  (sequential_embedding_model): SequentialEmbedding(
+    (lstm): LSTM(1, 64, num_layers=3, batch_first=True)
+  )
+  (relational_embedding_model): RelationalEmbedding(
+    (softmax_dim_1): Softmax(dim=1)
+    (activation_function): LeakyReLU(negative_slope=0.01)
+    (linear_1_hop_layer_1): Linear(in_features=171, out_features=171, bias=True)
+    (linear_1_hop_layer_2): Linear(in_features=171, out_features=171, bias=True)
+    (linear_1_hop_layer_3): Linear(in_features=171, out_features=1, bias=True)
+    (linear_2_hop_layer_1): Linear(in_features=171, out_features=171, bias=True)
+    (linear_2_hop_layer_2): Linear(in_features=171, out_features=171, bias=True)
+    (linear_2_hop_layer_3): Linear(in_features=171, out_features=1, bias=True)
+    (linear_3_hop_layer_1): Linear(in_features=171, out_features=171, bias=True)
+    (linear_3_hop_layer_2): Linear(in_features=171, out_features=171, bias=True)
+    (linear_3_hop_layer_3): Linear(in_features=171, out_features=1, bias=True)
+  )
+  (combined_prediction_model): FullyConnected(
+    (activation_function): LeakyReLU(negative_slope=0.01)
+    (linear_layer_1): Linear(in_features=128, out_features=128, bias=True)
+    (linear_layer_2): Linear(in_features=128, out_features=128, bias=True)
+    (linear_layer_3): Linear(in_features=128, out_features=1, bias=True)
+  )
+)
+2021-05-24 08:55:09.300 | INFO     | __main__:main:78 - Starting training with args:
+2021-05-24 08:55:09.300 | INFO     | __main__:main:80 - seq_embed_size: 64
+2021-05-24 08:55:09.300 | INFO     | __main__:main:80 - k_hops: 3
+2021-05-24 08:55:09.301 | INFO     | __main__:main:80 - hop_layers: 3
+2021-05-24 08:55:09.301 | INFO     | __main__:main:80 - lstm_layers: 3
+2021-05-24 08:55:09.301 | INFO     | __main__:main:80 - fn_layers: 3
+2021-05-24 08:55:09.301 | INFO     | __main__:main:80 - lr: 0.0001
+2021-05-24 08:55:09.301 | INFO     | __main__:main:80 - weight_decay: 1e-08
+2021-05-24 08:55:09.301 | INFO     | __main__:main:80 - alpha: 0.6
+2021-05-24 08:55:09.301 | INFO     | __main__:main:80 - epochs: 50
+2021-05-24 08:55:09.302 | INFO     | __main__:main:80 - batch_size: 2
+2021-05-24 08:55:09.302 | INFO     | __main__:main:80 - window_size: 30
+2021-05-24 08:55:09.302 | INFO     | __main__:main:80 - device: cuda:1
+2021-05-24 08:55:09.302 | INFO     | __main__:main:80 - model_id: LSTM_64_seq_30_window
+2021-05-24 08:55:09.302 | INFO     | __main__:main:80 - path: checkpoints/LSTM_64_seq_30_window.pt
+2021-05-24 08:55:09.303 | INFO     | __main__:main:80 - logger_path: logs/LSTM_64_seq_30_window.log
+2021-05-24 08:55:09.303 | INFO     | __main__:main:80 - session_data_path: sessiondata/LSTM_64_seq_30_window.pkl
+2021-05-24 08:55:09.303 | INFO     | train:train:39 - Starting Epoch 0...
+2021-05-24 08:56:05.706 | INFO     | train:train:77 - Epoch: 0, Train Loss: 2.5076e-04, Valid Loss: 2.8969e-04
+2021-05-24 08:56:05.780 | INFO     | train:train:39 - Starting Epoch 1...
+2021-05-24 08:56:51.472 | INFO     | train:train:39 - Starting Epoch 2...
+2021-05-24 08:57:37.292 | INFO     | train:train:39 - Starting Epoch 3...
+2021-05-24 08:58:22.994 | INFO     | train:train:39 - Starting Epoch 4...
+2021-05-24 08:59:08.731 | INFO     | train:train:39 - Starting Epoch 5...
+2021-05-24 08:59:54.560 | INFO     | train:train:39 - Starting Epoch 6...
+2021-05-24 09:00:40.285 | INFO     | train:train:39 - Starting Epoch 7...
+2021-05-24 09:01:26.035 | INFO     | train:train:39 - Starting Epoch 8...
+2021-05-24 09:02:11.726 | INFO     | train:train:39 - Starting Epoch 9...
+2021-05-24 09:02:57.541 | INFO     | train:train:39 - Starting Epoch 10...
+2021-05-24 09:03:43.353 | INFO     | train:train:39 - Starting Epoch 11...
+2021-05-24 09:04:29.191 | INFO     | train:train:39 - Starting Epoch 12...
+2021-05-24 09:05:14.958 | INFO     | train:train:39 - Starting Epoch 13...
+2021-05-24 09:06:00.810 | INFO     | train:train:39 - Starting Epoch 14...
+2021-05-24 09:06:46.562 | INFO     | train:train:39 - Starting Epoch 15...
+2021-05-24 09:07:32.319 | INFO     | train:train:39 - Starting Epoch 16...
+2021-05-24 09:08:18.056 | INFO     | train:train:39 - Starting Epoch 17...
+2021-05-24 09:09:03.930 | INFO     | train:train:39 - Starting Epoch 18...
+2021-05-24 09:09:49.762 | INFO     | train:train:39 - Starting Epoch 19...
+2021-05-24 09:10:35.597 | INFO     | train:train:39 - Starting Epoch 20...
+2021-05-24 09:11:21.460 | INFO     | train:train:39 - Starting Epoch 21...
+2021-05-24 09:12:07.232 | INFO     | train:train:39 - Starting Epoch 22...
+2021-05-24 09:12:52.975 | INFO     | train:train:39 - Starting Epoch 23...
+2021-05-24 09:13:38.735 | INFO     | train:train:39 - Starting Epoch 24...
+2021-05-24 09:14:24.505 | INFO     | train:train:39 - Starting Epoch 25...
+2021-05-24 09:15:10.416 | INFO     | train:train:39 - Starting Epoch 26...
+2021-05-24 09:15:56.171 | INFO     | train:train:39 - Starting Epoch 27...
+2021-05-24 09:16:41.953 | INFO     | train:train:39 - Starting Epoch 28...
+2021-05-24 09:17:27.669 | INFO     | train:train:39 - Starting Epoch 29...
+2021-05-24 09:18:13.487 | INFO     | train:train:39 - Starting Epoch 30...
+2021-05-24 09:18:59.408 | INFO     | train:train:39 - Starting Epoch 31...
+2021-05-24 09:19:45.472 | INFO     | train:train:39 - Starting Epoch 32...
+2021-05-24 09:20:31.593 | INFO     | train:train:39 - Starting Epoch 33...
