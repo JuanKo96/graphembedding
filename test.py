@@ -1,6 +1,6 @@
 import torch
 import torch.nn as nn
-from train import ranking_mse_loss, criterion
+from train import ranking_mse_loss
 
 def test(model, test_loader, args):
     criterion = nn.MSELoss()

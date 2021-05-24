@@ -35,9 +35,9 @@ def get_dataloader(data, batch_size=16, window_size=30, split_ratio=(0.6,0.2,0.2
     y_val = torch.FloatTensor(y_val)
     val_dataset = TensorDataset(x_val, y_val)
 
-    train_dataloader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True, device=device)
-    test_dataloader = DataLoader(test_dataset, batch_size=batch_size, shuffle=True, device=device)
-    val_dataloader = DataLoader(val_dataset, batch_size=batch_size, shuffle=True, device=device)
+    train_dataloader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True, device=device, drop_last=True)
+    test_dataloader = DataLoader(test_dataset, batch_size=batch_size, shuffle=True, device=device, drop_last=True)
+    val_dataloader = DataLoader(val_dataset, batch_size=batch_size, shuffle=True, device=device, drop_last=True)
 
     N, n_features = x_train.size()[2:]
     return (N, n_features), (train_dataloader, test_dataloader, val_dataloader)
